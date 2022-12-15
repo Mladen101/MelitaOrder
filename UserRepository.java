@@ -1,18 +1,17 @@
-package murraco.repository;
+package com.bezkoder.springjwt.repository;
 
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import murraco.model.AppUser;
+import com.bezkoder.springjwt.models.User;
 
-public interface UserRepository extends JpaRepository<AppUser, Integer> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+  Optional<User> findByUsername(String username);
 
-  boolean existsByUsername(String username);
+  Boolean existsByUsername(String username);
 
-  AppUser findByUsername(String username);
-
-  @Transactional
-  void deleteByUsername(String username);
-
+  Boolean existsByEmail(String email);
 }
