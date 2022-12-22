@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Spring security</title>
 </head>
-<body>
+<body>    
+Welcome to Spring security page! <br> <br>  
+Login as:   
+<a href="admin">Admin</a> <a href="user">User</a>  
+</body>    
+</html>   
 
-</body>
-</html>
