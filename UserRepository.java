@@ -1,10 +1,16 @@
-package com.springboot.service_layer;
+package com.springboot.repository;
 
-public class UserRepository {
+import com.springboot.entity.User;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-	public Object findByUsernameOrEmail(String usernameOrEmail, String usernameOrEmail2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    Optional<User> findByUsernameOrEmail(String username, String email);
+    Optional<User> findByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }
+
