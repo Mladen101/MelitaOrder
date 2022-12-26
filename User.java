@@ -1,43 +1,47 @@
-package com.springkafka.kafkaproducer.model;
+package com.springboot.entity;
 
 
 
-	public class User {
+//import lombok.Data;
 
-	    private long id;
-	    private String username;
+import java.util.Set;
 
-	    public User() {
-	    }
+import javax.management.relation.Role;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 
-	    public User(long id, String username) {
-	        this.id = id;
-	        this.username = username;
-	    }
+import com.springboot.app.Data;
 
-	    public long getId() {
-	        return id;
-	    }
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	    public void setId(long id) {
-	        this.id = id;
-	    }
+@Data
+@Entity
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"username"}),
+        @UniqueConstraint(columnNames = {"email"})
+})
+public class User {
 
-	    public String getUsername() {
-	        return username;
-	    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    private String username;
+    private String email;
+    private String password;
 
-	    public void setUsername(String username) {
-	        this.username = username;
-	    }
-
-	    @Override
-	    public String toString() {
-	        return "User{" +
-	                "id=" + id +
-	                ", username='" + username + '\'' +
-	                '}';
-	    }
-	}
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
+}
 

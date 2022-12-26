@@ -1,39 +1,29 @@
-package com.bezkoder.springjwt.models;
+package com.springboot.entity;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "roles")
-public class Role {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
 
-  @Enumerated(EnumType.STRING)
-  @Column(length = 20)
-  private ERole name;
+	import lombok.Getter;
+	import lombok.Setter;
 
-  public Role() {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-  }
+import org.hibernate.annotations.Entity;
 
-  public Role(ERole name) {
-    this.name = name;
-  }
+	@Setter
+	@Getter
+	@Entity
+	@Table(name = "roles")
+	public class Role {
 
-  public Integer getId() {
-    return id;
-  }
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private long id;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+	    @Column(length = 60)
+	    private String name;
+	}
 
-  public ERole getName() {
-    return name;
-  }
-
-  public void setName(ERole name) {
-    this.name = name;
-  }
-}
