@@ -1,13 +1,10 @@
-package com.springboot.repository;
+package com.springboot.blog.repository;
 
+public class RoleRepository {
 
+	public Object findByName(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-import com.springboot.blog.entity.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
-
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(String name);
 }
-

@@ -1,16 +1,28 @@
-package com.springboot.repository;
+package com.springboot.blog.repository;
 
-import com.springboot.entity.User;
-import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.springboot.blog.entity.User;
 
-import java.util.Optional;
+public class UserRepository {
+	UserRepository userRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
-    Optional<User> findByUsernameOrEmail(String username, String email);
-    Optional<User> findByUsername(String username);
-    Boolean existsByUsername(String username);
-    Boolean existsByEmail(String email);
+	public Object findByUsernameOrEmail(String usernameOrEmail, String usernameOrEmail2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean existsByUsername(Object username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean existsByEmail(Object email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void save(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
-
