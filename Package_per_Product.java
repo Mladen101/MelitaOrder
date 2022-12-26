@@ -18,18 +18,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author HP
- */
+
 @Entity
 @Table(name = "package_per_product")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Package_per_product.findAll", query = "SELECT r FROM Package_per_product r")
     , @NamedQuery(name = "Package_per_product.findById", query = "SELECT r FROM Package_per_product r WHERE p.id = :id")
-    , @NamedQuery(name = "Package_per_product.findByInternet_1_GB/s", query = "SELECT r FROM Product r WHERE r.Internet_1_GB/s = :Internet_1_GB/s")
-    , @NamedQuery(name = "Package_per_product.findByInternet_250MB/s", query = "SELECT r FROM Product r WHERE r.Internet_250MB/s = :Internet_250MB/s")
+    , @NamedQuery(name = "Package_per_product.findByInternet_1_GBs", query = "SELECT r FROM Product r WHERE r.Internet_1_GBs = :Internet_1_GB/s")
+    , @NamedQuery(name = "Package_per_product.findByInternet_250MBs", query = "SELECT r FROM Product r WHERE r.Internet_250MBs = :Internet_250MB/s")
     , @NamedQuery(name = "Package_per_product.findByTv_with_90_channels", query = "SELECT r FROM Product r WHERE r.Tv_with_90_channels = :Tv_with_90_channels")
     , @NamedQuery(name = "Package_per_product.findByTv_with_150_channels", query = "SELECT r FROM Product r WHERE r.Tv_with_150_channels = :Tv_with_150_channels")
     , @NamedQuery(name = "Package_per_product.findByTelephony_with_free_calls", query = "SELECT r FROM Product r WHERE r.Telephony_with_free_calls = :Telephony_with_free_calls")
@@ -47,9 +44,9 @@ public class  Package_per_Product implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1024)
-    @Column(name = "Internet_1_GB/s")
-    private String Internet_1_GBs;
-    @Column(name = "Internet_250MB/s")
+    @Column(name = "Internet_1_GBs")
+    private String Internet_1_GBs1;
+    @Column(name = "Internet_250MBs")
     private String Internet_250MBs;
     @Column(name = "Tv_with_90_channels")
     private Integer Tv_with_90_channels;
@@ -63,23 +60,34 @@ public class  Package_per_Product implements Serializable {
     private Integer   Mobilepostpaid;
     @Column(name = "products")
     private String products;
+	private String internet;
+	private Object Internet_1_GBs;
+	private Object Internet_250_MBs;
 
     public Package_per_Product() {
     }
 
     public Package_per_Product(Integer id) {
         this.id = id;
-    }
-
-   public Package_per_Product(Integer id, String Internet_1_GB/s, String Internet_250MB/s, Integer Tv_with_90_channels, Integer Tv_with_150_channel, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid) 
+    
+    
+   Object s;
+   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, Integer Tv_with_90_channels, Integer Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid)
+   {
   
 
-      this.id = id;
-        this.Internet_1_GB/s = Internet_1_GBs;
-        this.Internet_250MB/s= Internet_250_MBs;
+        this.id = id;
+        this.Internet_1_GBs1 = Internet_1_GBs;
+        this.Internet_250_MBs= Internet_250_MBs;
         this.Tv_with_90_channels= Tv_with_90_channels;
         this.Tv_with_150_channels= Tv_with_150_channels;
-}  
+        this.Tv_with_150_channels= Tv_with_150_channels;
+        this.Tv_with_150_channels= Tv_with_150_channels;
+        this.Telephony_with_free_calls=Telephony_with_free_calls ;
+        this.Mobileprepaid=Mobileprepaid;
+        this.Mobilepostpaid=Mobilepostpaid;}
+        
+}
 
     public Integer getId() {
         return id;
@@ -90,35 +98,35 @@ public class  Package_per_Product implements Serializable {
     }
 
     public String getInternet() {
-        return internet;
+        return getInternet();
     }
 
     public void setInternet(String internet) {
         this.internet = internet;
     }
 
-    public String  getTv_with_90_channels() {
-        return tv_with_90_channels;
+    public Integer  getTv_with_90_channels() {
+        return Tv_with_90_channels;
     }
 
     public void setTv_with_90_channels(Integer Tv_with_90_channels) {
-        this.tv_with_90_channels = tv_with_90_channels;
+        this.Tv_with_90_channels = Tv_with_90_channels;
     }
 
-    public String  getTv_with_150_channels() {
-        return tv_with_150_channels;
+    public Integer  getTv_with_150_channels() {
+        return Tv_with_150_channels;
    
     }
     
     public void setTv_with_150_channels(Integer Tv_with_150_channels) {
-        this.tv_with_150_channels = Tv_with_150_channels;
+        this.Tv_with_150_channels = Tv_with_150_channels;
     }   
-    public String  getTelephony_with_free_calls() {
-        return telephony_with_free_calls;
+    public Integer  getTelephony_with_free_calls() {
+        return Telephony_with_free_calls;
    
     }
-    public void setTelephony_with_free_calls( Integer elephony_with_free_calls) {
-        this.telephony_with_free_calls = telephony_with_free_calls;
+    public void setTelephony_with_free_calls( Integer Telephony_with_free_calls) {
+        this.Telephony_with_free_calls = Telephony_with_free_calls;
     }
     public String getProducts() {
         return products;

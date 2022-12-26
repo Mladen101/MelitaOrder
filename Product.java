@@ -2,12 +2,15 @@ package com.model;
 
 	import java.io.Serializable;
 	import java.math.BigDecimal;
-	import javax.persistence.Basic;
+    import java.util.HashSet;
+    import javax.persistence.Basic;
 	import javax.persistence.Column;
 	import javax.persistence.Entity;
 	import javax.persistence.GeneratedValue;
 	import javax.persistence.GenerationType;
 	import javax.persistence.Id;
+	import javax.persistence.ManyToMany;
+	import javax.persistence.OneToMany;
 	import javax.persistence.NamedQueries;
 	import javax.persistence.NamedQuery;
 	import javax.persistence.Table;
@@ -30,13 +33,14 @@ package com.model;
 	    , @NamedQuery(name = "Product.findByTv", query = "SELECT p FROM Product p WHERE p.tv = :tv")
 	    , @NamedQuery(name = "Product.findByTelephony", query = "SELECT p FROM Telephony p WHERE p.telephony = :telephony")
 	    , @NamedQuery(name = "Product.findByMobile", query = "SELECT p FROM Mobile p WHERE p.mobile= :mobile")
-	    , @NamedQuery(name = "Product.findByCustomer", query = "SELECT p FROM Product p WHERE p.customer = :customer")})
+	    , @NamedQuery(name = "Product.findByPackage", query = "SELECT p FROM Product p WHERE p.customer = :customer")})
 	
    public class Product implements Serializable {
 		
-	    @Column(name = "customer")
-	    private Integer customer;
-
+     
+	     
+	    @ManyToMany(mappedBy = "product")
+	    @OneToMany(mappedBy = "package")       
 	    private static final long serialVersionUID = 1L;
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,16 +128,13 @@ package com.model;
 	   
 	    }
 
-	    public Integer getCustomer() {
-	        return customer;
-	    }
+		public Object getCustomer() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	   
+	   
+		}
 
-	    public void setCustomer(Integer customr) {
-	        this.customer = customer;
-	    }
-	    
-
-}
-
-
+	
 

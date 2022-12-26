@@ -34,9 +34,9 @@ package com.model;
 	        return result;
 	    }
 	    */
-	    public List<Product> findByCategory(int id){
+	    public List<Product> findByPackage(int id){
 	        Session session = sessionFactory.getCurrentSession();
-	        List<Product> result = session.getNamedQuery("Product.findByCustomer").setInteger("customer", id).list();
+	        List<Product> result = session.getNamedQuery("Product.findByPackage").setInteger("package", id).list();
 	        return result;
 	    }
 	    
@@ -45,6 +45,11 @@ package com.model;
 	        List<Product> result = session.createCriteria(Product.class).list(); 
 	        return result;
 	    }
+
+		public List<Product> findByCustomer(int id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 	 
 	    

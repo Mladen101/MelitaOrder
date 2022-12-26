@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.proj.model;
+
+package com.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+//import javax.validation.constOrdering Fulfilment systemraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
     , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
-    , @NamedQuery(name = "Orders.findByUserdata", query = "SELECT o FROM Orders o WHERE o.userdata = :userdata")
+    , @NamedQuery(name = "Orders.findByCustomerdata", query = "SELECT o FROM Orders o WHERE o.customerdata = :customerdata")
     , @NamedQuery(name = "Orders.findByOrdertime", query = "SELECT o FROM Orders o WHERE o.ordertime = :ordertime")
     , @NamedQuery(name = "Orders.findByProducts", query = "SELECT o FROM Orders o WHERE o.products = :products")})
 public class Orders implements Serializable {
@@ -46,8 +43,8 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1024)
-    @Column(name = "userdata")
-    private String userdata;
+    @Column(name = "customererdata")
+    private String customerdata;
     @Column(name = "ordertime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ordertime;
@@ -64,9 +61,9 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, String userdata, String products) {
+    public Orders(Integer id, String customerdata, String products) {
         this.id = id;
-        this.userdata = userdata;
+        this.customerdata = customerdata;
         this.products = products;
     }
 
@@ -78,12 +75,12 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public String getUserdata() {
-        return userdata;
+    public String getCustomerdata() {
+        return customerdata;
     }
 
-    public void setUserdata(String userdata) {
-        this.userdata = userdata;
+    public void setCustomerdata(String customerdata) {
+        this.customerdata = customerdata;
     }
 
     public Date getOrdertime() {
@@ -124,7 +121,8 @@ public class Orders implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proj.model.Orders[ id=" + id + " ]";
+        return "com.model.Orders[ id=" + id + " ]";
     }
     
 }
+
