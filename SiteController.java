@@ -1,16 +1,12 @@
+package com.controller;
 
-package com.proj.controller;
+
 
 
 
 
  
-import com.proj.model.Category;
-import com.proj.model.CategoryDao;
-import com.proj.model.Movie;
-import com.proj.model.MovieDao;
-import com.proj.model.Orders;
-import com.proj.model.OrdersDao;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,23 +21,31 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.model.Customer;
+import com.model.CustomerDao;
+import com.model.Orders;
+import com.model.OrdersDao;
+import com.model.Product;
+import com.model.ProductDao;
 
 @Controller
 public class SiteController {
      
     @Autowired
-    CategoryDao categoryDao;
+    CustomerDao customerDao;
     
     @Autowired
-    MovieDao movieDao;
+    ProductDao productDao;
     
     @Autowired
     OrdersDao ordersDao;
+
+	private String customerdata;
     
     @RequestMapping("/confirm")
     public String confirmOrder(@RequestParam(required = false) String userdata, HttpServletRequest request, ModelMap model){
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories);
+        List<Customer> customer = customerDao.find(); 
+        model.addAttribute("customer", customer);
         
         if(userdata==null){
              
@@ -52,21 +56,21 @@ public class SiteController {
             
                     
             HttpSession session= request.getSession();
-            HashMap<Integer,Movie> sessionMovies = (HashMap<Integer,Movie>)session.getAttribute("cart");        
+            HashMap<Integer,Product> sessionProducts = (HashMap<Integer,Product>)session.getAttribute("cart");        
             sb.append("[");
-            for(Map.Entry<Integer,Movie> m : sessionMovies.entrySet()){ 
+            for(Map.Entry<Integer,Product> p : sessionProducts.entrySet()){ 
                 sb.append("{\"id\":");
-                sb.append(m.getValue().getId());
+                sb.append(p.getValue().getId());
                 sb.append(",\"q\":");
-                sb.append(m.getValue().getQuantity());
+                sb.append(p.getValue().getQuantity());
                 sb.append("},");
             }
             String substr = sb.substring(0, sb.length()-1);
             substr += "]";
             Orders order = new Orders();
             order.setOrdertime(new Date(new java.util.Date().getTime()));
-            order.setProducts(substr);
-            order.setUserdata(userdata); 
+            order.setProducts(substr);        
+			order.setCustomerdata(customerdata); 
             ordersDao.save(order);
             
             session.removeAttribute("cart");
@@ -77,14 +81,14 @@ public class SiteController {
     
     @RequestMapping("/remove")
     public String remove(@RequestParam(required = true) int id, HttpServletRequest request, ModelMap model){ 
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories);
+        List<Customer> customers = customerDao.find(); 
+        model.addAttribute("customers", customers);
         
         HttpSession session = request.getSession();
         if(session.getAttribute("cart")!=null){
-            HashMap<Integer,Movie> movies = (HashMap<Integer,Movie>)session.getAttribute("cart");
-            if(movies.containsKey(id)){
-                movies.remove(id);
+            HashMap<Integer,Product> products = (HashMap<Integer,Product>)session.getAttribute("cart");
+            if(products.containsKey(id)){
+                products.remove(id);
             }
         }
         
@@ -94,21 +98,21 @@ public class SiteController {
     @RequestMapping("/cart")
     public String cart(HttpServletRequest request, ModelMap model){
         
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories);
+        List<Customer> customers = customerDao.find(); 
+        model.addAttribute("customers", customers);
         
-        List<Movie> movies = new ArrayList<Movie>(); 
+        List<Product> products = new ArrayList<Product>(); 
         
         HttpSession session = request.getSession();
         
         if(session.getAttribute("cart")!=null){
-            HashMap<Integer,Movie> sessionMovies = (HashMap<Integer,Movie>)session.getAttribute("cart");
-            for(Map.Entry<Integer,Movie> m : sessionMovies.entrySet()){
-                movies.add(m.getValue());
+            HashMap<Integer,Product> sessionProducts = (HashMap<Integer,Product>)session.getAttribute("cart");
+            for(Map.Entry<Integer,Product> p : sessionProducts.entrySet()){
+                products.add(p.getValue());
             }
         }
          
-        model.addAttribute("movies", movies);
+        model.addAttribute("products", products);
         
         return "cart";
     }
@@ -117,49 +121,49 @@ public class SiteController {
     public String addToBasket(ModelMap model, HttpServletRequest request, @RequestParam(required = true) Integer id,@RequestParam(required = true) Integer quantity){
         
         HttpSession session = request.getSession();
-        HashMap<Integer,Movie> cart;
+        HashMap<Integer, Product> cart;
         if(session.getAttribute("cart")==null){
-            session.setAttribute("cart", new HashMap<Integer,Movie>()); 
+            session.setAttribute("cart", new HashMap<Integer,Customer>()); 
         }
-        cart = (HashMap<Integer,Movie>)session.getAttribute("cart");
+        cart = (HashMap<Integer,Product>)session.getAttribute("cart");
         
         if(!cart.containsKey(id)){ 
-            Movie movie = movieDao.geById(id);
-            movie.quantity = quantity;
-            cart.put(id,movie);
+            Product product = productDao.geById(id);
+            product.quantity = quantity;
+            cart.put(id,product);
         } else {
-            Movie movieFromCart = cart.get(id);
-            movieFromCart.quantity+=quantity;
+           Product productFromCart = cart.get(id);
+            productFromCart.quantity+=quantity;
         }
         
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories); 
+        List<Customer> customers = customerDao.find(); 
+        model.addAttribute("customers", customers); 
         
         return "addedtobasket";
     }
     
     @RequestMapping("/tobasket/{id}")
     public String toBasket(@PathVariable int id, ModelMap model){
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories); 
-        Movie movie = movieDao.geById(id);
-        model.addAttribute("movie", movie);
+        List<Customer> customers = customerDao.find(); 
+        model.addAttribute("customers", customers); 
+        Product product = productDao.geById(id);
+        model.addAttribute("product", product);
         return "tobasket";
     }
     
     @RequestMapping("/")
     public String index(ModelMap model){ 
-        List<Category> categories = categoryDao.find(); 
-        model.addAttribute("categories", categories); 
-        return byCategory(1, model);
+        List<Customer> customers = customerDao.find(); 
+        model.addAttribute("customers", customers); 
+        return byCustomer(1, model);
     }
     
     @RequestMapping("/{id}")
-    public String byCategory(@PathVariable int id, ModelMap model){ 
-        List<Category> categories = categoryDao.find(); 
-        List<Movie> movies = movieDao.findByCategory(id);
-        model.addAttribute("categories", categories); 
-        model.addAttribute("movies", movies); 
+    public String byCustomer(@PathVariable int id, ModelMap model){ 
+        List<Customer> customers = customerDao.find(); 
+        List<Product> products = productDao.findByCustomer(id);
+        model.addAttribute("customers", customers); 
+        model.addAttribute("products", products); 
         return "index";
     }
 }
