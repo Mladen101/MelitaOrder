@@ -115,7 +115,7 @@ package postman;
 	    Request.Builder reqBuilder = new Request.Builder();
 	    
 	    // URL
-	    reqBuilder = reqBuilder.url(environmentStringIncluder(postmanRequest.getUrl().getRaw()));
+	    reqBuilder = reqBuilder.url(environmentStringIncluder(((Object) postmanRequest.getUrl()).getRaw()));
 
 	    // Headers & mediaType
 	    List<ItemHeader> headerList = postmanRequest.getHeader();
@@ -196,8 +196,8 @@ package postman;
 		}
 	  }
 	  
-	  private String environmentStringIncluder(String original) {
-	    String ret = original;
+	  private String environmentStringIncluder(CharSequence charSequence) {
+	    String ret = charSequence;
 	    
 	    for(Entry<String, String> entry : this.environmentMap.entrySet() ){
 	      String key = entry.getKey();
@@ -280,4 +280,4 @@ package postman;
 	}
 
 
-}
+

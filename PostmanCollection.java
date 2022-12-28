@@ -23,5 +23,9 @@ public final class PostmanCollection {
   @Builder.Default private List<CollectionItem> item = new ArrayList<>();
   @Builder.Default private List<CollectionEvent> event = new ArrayList<>();
   @Builder.Default private List<CollectionVariable> variable = new ArrayList<>();
+public List<CollectionItem> getItem() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
 
