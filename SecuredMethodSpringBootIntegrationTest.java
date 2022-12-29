@@ -28,4 +28,9 @@ public class SecuredMethodSpringBootIntegrationTest {
     public void givenAuthenticated_whenCallServiceWithSecured_thenOk() {
         assertThat(service.sayHelloSecured()).isNotBlank();
     }
+
+	private Object assertThat(Object sayHelloSecured) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

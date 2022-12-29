@@ -10,18 +10,19 @@ import org.springframework.web.context.WebApplicationContext;
 import com.springboot.test.app.MockMvc;
 import com.springboot.test.app.WithMockUser;
 import com.springboottest.Autowired;
+import com.springboottest.MockMvcBuilders;
 
 public class SecuredControllerSpringBootIntegrationTest {
 
     @Autowired
     private WebApplicationContext context;
-
+public void apply() {};
     private MockMvc mvc;
 
     @Before
     public void setup() {
-        mvc = MockMvcBuilders
-          .webAppContextSetup(context)
+        mvc = ( MockMvcBuilders
+          .webAppContextSetup(context))
           .apply(springSecurity())
           .build();
     }
@@ -36,8 +37,8 @@ public class SecuredControllerSpringBootIntegrationTest {
 	@WithMockUser("spring")
     @Test
     public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
-        mvc.perform(((Object) get("/private/hello")).contentType(MediaType.APPLICATION_JSON))
-          .andExpect(((Object) status()).isOk());
+        mvc.perform(( get("/private/hello")).contentType(MediaType.APPLICATION_JSON))
+          .andExpect((status()).isOk());
     }
 
 	private Object get(String string) {
