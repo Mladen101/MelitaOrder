@@ -1,6 +1,8 @@
 package postman;
 
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +16,12 @@ import okhttp3.Response;
 public class OkHttpRequest {
   private Request request;
   private Response response;
-}
+  private Response execute;
 
+  void add() {};
+  void builder() {};
+	void request() {};
+	void build(){};
+
+
+}

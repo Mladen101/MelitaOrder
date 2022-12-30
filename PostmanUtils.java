@@ -31,6 +31,7 @@ import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
@@ -111,11 +112,12 @@ public class PostmanUtils {
     if(postmanRequest == null) {
       return;
     }
+  
     
     Request.Builder reqBuilder = new Request.Builder();
     
     // URL
-    reqBuilder = reqBuilder.url(environmentStringIncluder(postmanRequest.getUrl().getRaw()));
+    reqBuilder = ((Builder) reqBuilder).url(environmentStringIncluder(((CollectionItem) postmanRequest.getUrl()).getRaw()));
 
     // Headers & mediaType
     List<ItemHeader> headerList = postmanRequest.getHeader();
@@ -146,10 +148,15 @@ public class PostmanUtils {
       reqBuilder = reqBuilder.method(postmanRequest.getMethod(), null);
     }
     
-    retList.add(OkHttpRequest.builder().request(reqBuilder.build()).build());
+    retList.add((OkHttpRequest) ((OkHttpRequest) OkHttpRequest.builder()).request(reqBuilder.build()).build());
   }
   
   private String environmentStringIncluder(CharSequence raw) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+private String environmentStringIncluder(ItemRequest itemRequest) {
 	// TODO Auto-generated method stub
 	return null;
 }
@@ -166,7 +173,7 @@ public class PostmanUtils {
     reqList.forEach(req -> {
       try {
     	sendRequest(req);
-      } catch (PostmanUtilException e) {
+      } catch (PostmanUtilException | IOException e) {
         exceptions.add(new PostmanUtilException(e));
       }
     });
@@ -182,7 +189,12 @@ public class PostmanUtils {
    */
   public void sendAllRequest(List<OkHttpRequest> reqList) throws PostmanUtilException {
 	for(OkHttpRequest req : reqList) {
-	  sendRequest(req);
+	  try {
+		sendRequest(req);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
   }
   
@@ -192,13 +204,9 @@ public class PostmanUtils {
    * @param request OkHttpRequest
    * @throws PostmanUtilException An exception raised during the request.
    */
-  public void sendRequest(OkHttpRequest request) throws PostmanUtilException {
-	try {
-	  Response response = this.getOkHttpClient().newCall(request.getRequest()).execute();
+  public void sendRequest(OkHttpRequest request) throws PostmanUtilException, IOException {
+	Response response = ((OkHttpClient) this.getOkHttpClient().newCall(request.getRequest())).execute();
 	  request.setResponse(response);
-	} catch (IOException e) {
-	  throw new PostmanUtilException("Error occurred during request.", e);
-	}
   }
   
   private String environmentStringIncluder(String original) {
@@ -257,11 +265,11 @@ public class PostmanUtils {
 				});
 				cookieList.addAll(arg1);
     		} else {
-    			cookieMap.put(arg0.host(), arg1);
+    			cookieMap.put((String) arg0.host(), arg1);
     		}
 		}
       };
-      httpClient = new OkHttpClient().newBuilder().cookieJar(cookieJar).build();
+      httpClient = ((OkHttpClient) new OkHttpClient().newBuilder()).cookieJar(cookieJar).build();
     }
     
     return httpClient;
@@ -273,7 +281,7 @@ public class PostmanUtils {
    * @param arg0 HttpUrl with domain address.
    */
   public void clearCookies(HttpUrl arg0) {
-	  this.getOkHttpClient().cookieJar().loadForRequest(arg0).clear();
+	  ((CookieJar) this.getOkHttpClient().cookieJar()).loadForRequest(arg0).clear();
   }
   
   private static ObjectMapper getObjectMapper() {
