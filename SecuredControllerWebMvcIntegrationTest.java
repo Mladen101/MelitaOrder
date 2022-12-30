@@ -28,9 +28,24 @@ public class SecuredControllerWebMvcIntegrationTest {
     @WithMockUser(value = "spring")
     @Test
     public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
-        mvc.perform(get("/private/hello").contentType(MediaType.APPLICATION_JSON))
-          .andExpect(status().isOk());
+        ((SecuredControllerWebMvcIntegrationTest) mvc.perform(((SecuredControllerWebMvcIntegrationTest) get("/private/hello")).contentType(MediaType.APPLICATION_JSON)))
+          .andExpect(((SecuredControllerWebMvcIntegrationTest) status()).isOk());
     }
+
+	private void andExpect(Object ok) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Object isOk() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object contentType(MediaType applicationJson) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	private Object status() {
 		// TODO Auto-generated method stub

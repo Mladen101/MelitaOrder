@@ -21,13 +21,23 @@ public void apply() {};
 
     @Before
     public void setup() {
-        mvc = ( MockMvcBuilders
+        mvc = ((SecuredControllerSpringBootIntegrationTest) ( (SecuredControllerSpringBootIntegrationTest) MockMvcBuilders
           .webAppContextSetup(context))
-          .apply(springSecurity())
+          .apply(springSecurity()))
           .build();
     }
 
-    // ... other methods
+    private MockMvc build() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object apply(Object springSecurity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// ... other methods
 
     private Object springSecurity() {
 		// TODO Auto-generated method stub
@@ -37,9 +47,24 @@ public void apply() {};
 	@WithMockUser("spring")
     @Test
     public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
-        mvc.perform(( get("/private/hello")).contentType(MediaType.APPLICATION_JSON))
-          .andExpect((status()).isOk());
+        ((SecuredControllerSpringBootIntegrationTest) ((MockMvc) mvc).perform(( (SecuredControllerSpringBootIntegrationTest) get("/private/hello")).contentType(MediaType.APPLICATION_JSON)))
+          .andExpect(((SecuredControllerSpringBootIntegrationTest) status()).isOk());
     }
+
+	private void andExpect(Object ok) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Object isOk() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object contentType(MediaType applicationJson) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	private Object get(String string) {
 		// TODO Auto-generated method stub

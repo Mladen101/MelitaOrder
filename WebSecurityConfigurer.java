@@ -2,11 +2,13 @@ package springboottest1;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.AbstractSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.springboot.entity.User;
@@ -16,14 +18,24 @@ import com.springboot.entity.User;
 
 	     @Bean
 	     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-	         UserDetails user = ((Object) User.withUsername("spring"))
-	             .password(passwordEncoder.encode("secret"))
+	         UserDetails user = ((WebSecurityConfigurer) ((WebSecurityConfigurer) User.withUsername("spring"))
+	             .password(passwordEncoder.encode("secret")))
 	             .roles("USER")
 	             .build();
 	         return new InMemoryUserDetailsManager(user);
 	     }
 
-	     @Bean
+	     private AbstractSecurityBuilder<DefaultSecurityFilterChain> roles(String string) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		private Object password(String encode) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Bean
 	     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	         http.authorizeRequests()
 	             .antMatchers("/private/**")
