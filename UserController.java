@@ -28,6 +28,7 @@ package com.kafka.controller;
 import com.springkafka.kafkaproducer.config.KafkaConfig;
 import com.springkafka.kafkaproducer.model.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,8 +54,14 @@ public class UserController {
 
     @PostMapping("/")
     public ResponseEntity<?> postUser(@RequestBody User user) {
-        ((Object) kafkaConfig.kafkaExample()).send(MessageBuilder.withPayload(user).build());
+        ((UserController) kafkaConfig.kafka()).send(MessageBuilder.withPayload(user).build());
         return ResponseEntity.ok(user);
     }
+
+
+	private void send(Message<User> build) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
