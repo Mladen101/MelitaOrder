@@ -69,7 +69,7 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = ((Object) roleRepository.findByName("ROLE_ADMIN")).get();
+        Role roles = ((AuthController) roleRepository.findByName("ROLE_ADMIN")).get();
         user.setRoles(Collections.singleton(roles));
 
         userRepository.save(user);
@@ -77,6 +77,11 @@ public class AuthController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
     }
+
+	private Role get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 
