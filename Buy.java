@@ -35,7 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Buy.findByNumber", query = "SELECT b FROM Buy b WHERE b.number = :number")
     , @NamedQuery(name = "Buy.findByTime", query = "SELECT b FROM Buy b WHERE b.time = :time")
     , @NamedQuery(name = "Buy.findByCustomers", query = "SELECT b FROM Buy b WHERE b.customers = :customers")
-    , @NamedQuery(name = "Buy.findByProducts", query = "SELECT b FROM Buy b WHERE b.products = :products")
+   , @NamedQuery(name = "Buy.findByProducts", query = "SELECT b FROM Buy b WHERE b.products = :products")
+
+
 })
 public class Buy implements Serializable {
 	
@@ -44,6 +46,7 @@ public class Buy implements Serializable {
 	        name = "Buy", 
 	        joinColumns = { @JoinColumn(name = "customer_id") }, 
 	        inverseJoinColumns = { @JoinColumn(name = "product_id") })
+	        
 
 
     private static final long serialVersionUID = 1L;
@@ -118,6 +121,21 @@ public class Buy implements Serializable {
     public String toString() {
         return "com.model.Buy[ id=" + id + " ]";
     }
+
+	public void setBuytime(java.sql.Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setPackage_per_Products(String substr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setCustomerdata(String customerdata) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }
 

@@ -39,5 +39,17 @@ package com.model;
 	        List<Buy> result = session.createCriteria(Buy.class).list(); 
 	        return result;
 	    }
-	}
+	    
+	    
+		    
+		    public void save(Buy buy){
+		       Session session = sessionFactory.getCurrentSession();
+		       //session.beginTransaction(); 
+		       session.save(buy); 
+		       //session.getTransaction().commit();
+		    }
+		}
+	
+	
+	
 
