@@ -15,7 +15,7 @@ package com.model;
 	    @Autowired
 	    SessionFactory sessionFactory;
 	    
-	    public Product geById(int id){
+	    public  Product geById(int id){
 	        return (Product)sessionFactory.getCurrentSession().get(Product.class, id);
 	    }
 	    

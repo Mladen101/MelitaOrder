@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,8 +34,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
     , @NamedQuery(name = "Orders.findByCustomerdata", query = "SELECT o FROM Orders o WHERE o.customerdata = :customerdata")
     , @NamedQuery(name = "Orders.findByOrdertime", query = "SELECT o FROM Orders o WHERE o.ordertime = :ordertime")
-    , @NamedQuery(name = "Orders.findByProducts", query = "SELECT o FROM Orders o WHERE o.products = :products")})
+    , @NamedQuery(name = "Orders.findByPackage_per_Products", query = "SELECT o FROM Orders o WHERE o.products = :products")
+    , @NamedQuery(name = "Orders.findByCustomers", query = "SELECT o FROM Orders o WHERE o.customers = :customers")})
+ 
+
 public class Orders implements Serializable {
+	
+	
+		   @ManyToMany
+		   @JoinTable(
+		        name = "Orders", 
+		        joinColumns = { @JoinColumn(name = "customer_id") }, 
+		        inverseJoinColumns = { @JoinColumn(name = "product_id") })
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -123,6 +137,11 @@ public class Orders implements Serializable {
     public String toString() {
         return "com.model.Orders[ id=" + id + " ]";
     }
+
+	public void setPackage_per_Products(String substr) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }
 

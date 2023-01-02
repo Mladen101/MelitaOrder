@@ -9,7 +9,9 @@ package com.model;
 	import javax.persistence.GeneratedValue;
 	import javax.persistence.GenerationType;
 	import javax.persistence.Id;
-	import javax.persistence.ManyToMany;
+    import javax.persistence.JoinColumn;
+    import javax.persistence.JoinTable;
+    import javax.persistence.ManyToMany;
 	import javax.persistence.OneToMany;
 	import javax.persistence.NamedQueries;
 	import javax.persistence.NamedQuery;
@@ -33,13 +35,18 @@ package com.model;
 	    , @NamedQuery(name = "Product.findByTv", query = "SELECT p FROM Product p WHERE p.tv = :tv")
 	    , @NamedQuery(name = "Product.findByTelephony", query = "SELECT p FROM Telephony p WHERE p.telephony = :telephony")
 	    , @NamedQuery(name = "Product.findByMobile", query = "SELECT p FROM Mobile p WHERE p.mobile= :mobile")
-	    , @NamedQuery(name = "Product.findByPackage", query = "SELECT p FROM Product p WHERE p.customer = :customer")})
+	    , @NamedQuery(name = "Product.findByPackage", query = "SELECT p FROM Product p WHERE p.package = :package")})
 	
    public class Product implements Serializable {
 		
      
 	     
-	    @ManyToMany(mappedBy = "product")
+	   @ManyToMany(targetEntity=Orders.class)  
+	    @JoinTable(
+		        name = "Order", 
+		        joinColumns = { @JoinColumn(name = "customer_id") }, 
+		        inverseJoinColumns = { @JoinColumn(name = "product_id") }
+		    )  
 	    @OneToMany(mappedBy = "package")       
 	    private static final long serialVersionUID = 1L;
 	    @Id

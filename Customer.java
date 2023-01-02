@@ -42,16 +42,9 @@ import javax.persistence.Basic;
 	
 	    private static final long serialVersionUID = 1L;
 
-        private int c_id;
-        private  String s_name;  
-        @ManyToMany(targetEntity=Product.class)  
         
-        private int id;
-        private int internet;
-        private int tv;
-        private int telephony;
-        private String mobile;
-        
+        @ManyToMany(targetEntity=Buy.class)  
+   
 		    @JoinTable(
 		        name = "Buy", 
 		        joinColumns = { @JoinColumn(name = "customer_id") }, 
@@ -61,9 +54,9 @@ import javax.persistence.Basic;
 	    @Id
 	    @Basic(optional = false)
 	    @NotNull
-	    @Column(name = "s_id")
+	    @Column(name = "id")
 		@GeneratedValue(strategy=GenerationType.AUTO)
-	    private Integer s_id;
+	    private Integer id;
 	    @Basic(optional = false)
 	    @NotNull
 	    @Size(min = 1, max = 45)
@@ -93,19 +86,19 @@ import javax.persistence.Basic;
 	    public Customer() {
 	    }
 
-	    public Customer(Integer s_id) {
-	        this.s_id = s_id;
+	    public Customer(Integer id) {
+	        this.id = id;
 	    }
 
-	    public Customer(Integer c_id, String name, String surname, String instalation_address) {
-	        this.s_id = c_id;
+	    public Customer(Integer id, String name, String surname, String instalation_address) {
+	        this.id = id;
 	        this.name = name;
 	        this.name = surname;
 	        this.instalation_address= instalation_address;
 	    }
 
-	    public Integer getS_id() {
-	        return s_id;
+	    public Integer getId() {
+	        return id;
 	    }
 
 	    public void setId(Integer id) {

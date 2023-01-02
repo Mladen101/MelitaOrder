@@ -9,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,16 +26,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Package_per_product.findAll", query = "SELECT r FROM Package_per_product r")
-    , @NamedQuery(name = "Package_per_product.findById", query = "SELECT r FROM Package_per_product r WHERE p.id = :id")
-    , @NamedQuery(name = "Package_per_product.findByInternet_1_GBs", query = "SELECT r FROM Product r WHERE r.Internet_1_GBs = :Internet_1_GB/s")
-    , @NamedQuery(name = "Package_per_product.findByInternet_250MBs", query = "SELECT r FROM Product r WHERE r.Internet_250MBs = :Internet_250MB/s")
-    , @NamedQuery(name = "Package_per_product.findByTv_with_90_channels", query = "SELECT r FROM Product r WHERE r.Tv_with_90_channels = :Tv_with_90_channels")
-    , @NamedQuery(name = "Package_per_product.findByTv_with_150_channels", query = "SELECT r FROM Product r WHERE r.Tv_with_150_channels = :Tv_with_150_channels")
-    , @NamedQuery(name = "Package_per_product.findByTelephony_with_free_calls", query = "SELECT r FROM Product r WHERE r.Telephony_with_free_calls = :Telephony_with_free_calls")
-    , @NamedQuery(name = "Package_per_product.findByMobileprepaid", query = "SELECT r FROM Product r WHERE r.Mobileprepaid = :Mobileprepaid")
-    , @NamedQuery(name = "Package_per_product.findByMobilepostpaid", query = "SELECT r FROM Product r WHERE r.Mobilepostpaid = :Mobilepostpaid")
+    , @NamedQuery(name = "Package_per_product.findById", query = "SELECT r FROM Package_per_product r WHERE r.id = :id")
+    , @NamedQuery(name = "Package_per_product.findByInternet_1_GBs", query = "SELECT r FROM  Package_per_product r WHERE r.Internet_1_GBs = :Internet_1_GB/s")
+    , @NamedQuery(name = "Package_per_product.findByInternet_250MBs", query = "SELECT r FROM  Package_per_product r WHERE r.Internet_250MBs = :Internet_250MB/s")
+    , @NamedQuery(name = "Package_per_product.findByTv_with_90_channels", query = "SELECT r FROM  Package_per_product r WHERE r.Tv_with_90_channels = :Tv_with_90_channels")
+    , @NamedQuery(name = "Package_per_product.findByTv_with_150_channels", query = "SELECT r FROM  Package_per_product r WHERE r.Tv_with_150_channels = :Tv_with_150_channels")
+    , @NamedQuery(name = "Package_per_product.findByTelephony_with_free_calls", query = "SELECT r FROM  Package_per_product r WHERE r.Telephony_with_free_calls = :Telephony_with_free_calls")
+    , @NamedQuery(name = "Package_per_product.findByMobileprepaid", query = "SELECT r FROM  Package_per_product r WHERE r.Mobileprepaid = :Mobileprepaid")
+    , @NamedQuery(name = "Package_per_product.findByMobilepostpaid", query = "SELECT r FROM  Package_per_product r WHERE r.Mobilepostpaid = :Mobilepostpaid")
     , @NamedQuery(name = "Package_per_product.findByProducts", query = "SELECT r FROM Package_per_product r WHERE r.products = :products")})
 public class  Package_per_Product implements Serializable {
+	
+	  @ManyToOne()
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,9 +74,9 @@ public class  Package_per_Product implements Serializable {
     public Package_per_Product(Integer id) {
         this.id = id;
     
-    
-   Object s;
-   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, Integer Tv_with_90_channels, Integer Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid)
+    }
+  
+   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, Integer Tv_with_90_channels, Integer Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid){
    {
   
 
@@ -160,6 +164,11 @@ public class  Package_per_Product implements Serializable {
     public String toString() {
         return "com.model.Package_per_Product[ id=" + id + " ]";
     }
+
+	public Object getQuantity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
 
