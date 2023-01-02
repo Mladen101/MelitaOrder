@@ -57,15 +57,25 @@ public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
     user.setName(signUpDto.getName());
     user.setUsername(signUpDto.getUsername());
     user.setEmail(signUpDto.getEmail());
-    user.setPassword(( (Object) passwordEncoder).encode(signUpDto.getPassword()));
+    user.setPassword(( ( SignUpDto) passwordEncoder).encode(signUpDto.getPassword()));
 
-    Object roleRepository;
-	Role roles = ( (Object) roleRepository).findByName("ROLE_ADMIN").get();
+    SignUpDto roleRepository;
+	Role roles = ((Object) ((SignUpDto) roleRepository).findByName("ROLE_ADMIN")).get();
     user.setRoles(Collections.singleton(roles));
 
     userRepository.save(user);
 
     return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
+}
+
+private Object findByName(String string) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+private String encode(CharSequence password) {
+	// TODO Auto-generated method stub
+	return null;
 }
 }
