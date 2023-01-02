@@ -6,8 +6,8 @@ package com.kafka.producer.src;
 	import org.springframework.cloud.stream.annotation.Output;
 	import org.springframework.messaging.MessageChannel;
 
-	public interface KafkaConfig {
-		@Output
+	public interface Producer {
+		//@Output
 	    
 	    public MessageChannel kafkaExample();
 
