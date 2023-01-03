@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
     , @NamedQuery(name = "Orders.findByCustomerdata", query = "SELECT o FROM Orders o WHERE o.customerdata = :customerdata")
     , @NamedQuery(name = "Orders.findByOrdertime", query = "SELECT o FROM Orders o WHERE o.ordertime = :ordertime")
-    , @NamedQuery(name = "Orders.findByPackage_per_Products", query = "SELECT o FROM Orders o WHERE o.products = :products")
+    , @NamedQuery(name = "Orders.findByProducts", query = "SELECT o FROM Orders o WHERE o.products = :products")
     , @NamedQuery(name = "Orders.findByCustomers", query = "SELECT o FROM Orders o WHERE o.customers = :customers")})
  
 
