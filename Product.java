@@ -56,8 +56,7 @@ package com.model;
 	    private Integer id;
 	    @Size(max = 256)
 	    @Column(name = "internet")
-	    private Short internet;
-	    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+	    private Short internet;	  
 	    @Column(name = "tv")
 	    private Short tv;
 	    @Column(name = "telephony")
