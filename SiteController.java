@@ -44,56 +44,15 @@ public class SiteController {
    // @Autowired
    // BuyDao buyDao;
 	
-   /* I made four classes. Order class for relations between classes Customer and Product,  with relations manyTomany
-   and relations between  clasess Product and Package_per_product with relations oneTomany 
-   */
+	/*I created a customer class and a product class, and associated them with a many-to-many relatioons in order class,
+	 and order class and package_per_product class connected with relations one to many  */
 
 	private String customerdata;
     
     @RequestMapping("/confirm")
     public String confirmOrder(@RequestParam(required = false) String customerdata, HttpServletRequest request, ModelMap model){
-        List<Customer> customer = customerDao.find(); 
-        model.addAttribute("customer", customer);
-        
-        if(customerdata==null){
-             
-             
-        } else {
-            
-            StringBuilder sb = new StringBuilder();
-            
-                    
-            HttpSession session= request.getSession();
-            HashMap<Integer,Product> sessionProducts = (HashMap<Integer,Product>)session.getAttribute("cart");        
-            sb.append("[");
-            for(Map.Entry<Integer,Product> p : sessionProducts.entrySet()){ 
-                sb.append("{\"id\":");
-                sb.append(p.getValue().getId());
-                sb.append(",\"q\":");
-                sb.append(p.getValue().getQuantity());
-                sb.append("},");
-            }
-            String substr = sb.substring(0, sb.length()-1);
-            substr += "]";
-            Orders order = new Orders();
-            order.setOrdertime(new Date(new java.util.Date().getTime()));
-            order.setProducts(substr);        
-			order.setCustomerdata(customerdata); 
-            ordersDao.save(order);
-            
-            session.removeAttribute("cart");
-            return "confirmsuccess";   
-        }
-        return "confirm";
-    }
-    
-    
-    @RequestMapping("/confirmPackage_per_Product")
-    public String confirmPackage_per_Product(@RequestParam(required = false) String customerdata, HttpServletRequest request, ModelMap model){
-        List<Customer> customer = customerDao.find(); 
-        model.addAttribute("customer", customer);
-		
-
+        List<Product> product = ProductDao.find(); 
+        model.addAttribute("product", product);
         
         if(customerdata==null){
              
@@ -106,32 +65,34 @@ public class SiteController {
             HttpSession session= request.getSession();
             HashMap<Integer,Package_per_Product> sessionPackage_per_Product = (HashMap<Integer,Package_per_Product>)session.getAttribute("cart");        
             sb.append("[");
-            for(Map.Entry<Integer,Package_per_Product> r : sessionPackage_per_Product.entrySet()){ 
+            for(Map.Entry<Integer,Package_per_Product> p : sessionPackage_per_Product.entrySet()){ 
                 sb.append("{\"id\":");
-                sb.append(r.getValue().getId());
+                sb.append(p.getValue().getId());
                 sb.append(",\"q\":");
-                sb.append(r.getValue().getQuantity());
+                sb.append(p.getValue().getQuantity());
                 sb.append("},");
             }
             String substr = sb.substring(0, sb.length()-1);
             substr += "]";
             Orders order = new Orders();
             order.setOrdertime(new Date(new java.util.Date().getTime()));
-            order.setPackage_per_Products(substr);        
+            order.setProduct(substr);        
 			order.setCustomerdata(customerdata); 
             ordersDao.save(order);
             
             session.removeAttribute("cart");
             return "confirmsuccess";   
         }
-        return "confirmPackage_per_Product";
+        return "confirm";
     }
+    
+
 
 
     @RequestMapping("/remove")
     public String remove(@RequestParam(required = true) int id, HttpServletRequest request, ModelMap model){ 
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers);
+        List<Product> product = productDao.find(); 
+        model.addAttribute("product", product);
         
         HttpSession session = request.getSession();
         if(session.getAttribute("cart")!=null){
@@ -145,42 +106,25 @@ public class SiteController {
     }
     
     
-    
-    @RequestMapping("/remove")
-    public String removeProduct(@RequestParam(required = true) int id, HttpServletRequest request, ModelMap model){ 
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers);
-        
-        HttpSession session = request.getSession();
-        if(session.getAttribute("cart")!=null){
-            HashMap<Integer,Product> product = (HashMap<Integer,Product>)session.getAttribute("cart");
-            if(product.containsKey(id)){
-            	product.remove(id);
-            }
-        }
-        
-        return "remove";
-    }
-    
     @RequestMapping("/cart")
     public String cart(HttpServletRequest request, ModelMap model){
         
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers);
+        List<Product> product = productDao.find(); 
+        model.addAttribute("product", product);
         
-        List<Product> products = new ArrayList<Product>(); 
+     
         List<Package_per_Product> package_per_Product = new ArrayList<Package_per_Product>();
         
         HttpSession session = request.getSession();
         
         if(session.getAttribute("cart")!=null){
-            HashMap<Integer,Product> sessionProducts = (HashMap<Integer,Product>)session.getAttribute("cart");
-            for(Map.Entry<Integer,Product> p : sessionProducts.entrySet()){
-                products.add(p.getValue());
+            HashMap<Integer,Package_per_Product> sessionPackage_per_Product = (HashMap<Integer,Package_per_Product>)session.getAttribute("cart");
+            for(Map.Entry<Integer,Package_per_Product> p : sessionPackage_per_Product.entrySet()){
+            	package_per_Product.add(p.getValue());
             }
         }
          
-        model.addAttribute("products", products);
+        model.addAttribute("package_per_Product", package_per_Product);
         
         return "cart";
     }
@@ -189,31 +133,31 @@ public class SiteController {
     public String addToBasket(ModelMap model, HttpServletRequest request, @RequestParam(required = true) Integer id,@RequestParam(required = true) Integer quantity){
         
         HttpSession session = request.getSession();
-        HashMap<Integer, Product> cart;
+        HashMap<Integer, Package_per_Product> cart;
         if(session.getAttribute("cart")==null){
-            session.setAttribute("cart", new HashMap<Integer,Customer>()); 
+            session.setAttribute("cart", new HashMap<Integer,Package_per_Product>()); 
         }
-        cart = (HashMap<Integer,Product>)session.getAttribute("cart");
+        cart = (HashMap<Integer,Package_per_Product>)session.getAttribute("cart");
         
         if(!cart.containsKey(id)){ 
-            Product product = productDao.geById(id);
-            product.quantity = quantity;
-            cart.put(id,product);
+        	Package_per_Product package_per_Product = package_per_ProductDao.geById(id);
+        	package_per_Product.quantity = quantity;
+            cart.put(id,package_per_Product);
         } else {
-           Product productFromCart = cart.get(id);
-            productFromCart.quantity+=quantity;
+        	Package_per_Product package_per_ProductFromCart = cart.get(id);
+        	package_per_ProductFromCart.quantity+=quantity;
         }
         
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers); 
+        List<Product> product = productDao.find(); 
+        model.addAttribute("product ", product ); 
         
         return "addedtobasket";
     }
     
     @RequestMapping("/tobasket/{id}")
     public String toBasket(@PathVariable int id, ModelMap model){
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers); 
+        List<Product > product  = productDao.find(); 
+        model.addAttribute("product ", product ); 
         Package_per_Product package_per_Product = package_per_ProductDao.geById(id);
         model.addAttribute("package_per_Product", package_per_Product);
         return "tobasket";
@@ -223,31 +167,32 @@ public class SiteController {
     
     @RequestMapping("/")
     public String index(ModelMap model){ 
-        List<Customer> customers = customerDao.find(); 
-        model.addAttribute("customers", customers); 
-        return byCustomer(1, model);
+        List<Product> product  = productDao.find(); 
+        model.addAttribute("product", product ); 
+        return byProduct (1, model);
     }
     
     
-    @RequestMapping("/{id}")
-    public String byCustomer(@PathVariable int id, ModelMap model){ 
-        List<Customer> customer = customerDao.find(); 
-        List<Product> products = productDao.findByCustomer(id);
-        model.addAttribute("customer", customer); 
-        model.addAttribute("products", products); 
-        return "index";
-    }
 
     
     @RequestMapping("/{id}")
-    public String byCustomers(@PathVariable int id, ModelMap model){ 
-        List<Customer> customers = customerDao.find(); 
-        List<Package_per_Product> package_per_Products = package_per_ProductDao.findByCustomers(id);
-        model.addAttribute("customers", customers); 
-        model.addAttribute("package_per_Products", package_per_Products); 
+    public String byProduct(@PathVariable int id, ModelMap model){ 
+        List<Product> product  = productDao.find(); 
+        List<Package_per_Product> package_per_Product = package_per_ProductDao.findByProduct(id);
+        model.addAttribute("product", product); 
+        model.addAttribute("package_per_Product", package_per_Product); 
         return "index";
     }
 }
+
+
+
+
+
+
+    
+
+
 
 
 
