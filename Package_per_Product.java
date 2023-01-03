@@ -65,11 +65,10 @@ public class  Package_per_Product implements Serializable {
     private Integer  Mobileprepaid;
     @Column(name = "  Mobilepostpaid")
     private Integer   Mobilepostpaid;
-    @Column(name = "products")
-    private String products;
-	private String internet;
-	private Object Internet_1_GBs;
-	private Object Internet_250_MBs;
+    @Column(name = "product")
+    private Integer product;
+    private String internet;
+	
 
     public Package_per_Product() {
     }
@@ -79,20 +78,20 @@ public class  Package_per_Product implements Serializable {
     
     }
   
-   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, String Tv_with_90_channels, String Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid){
+   public Package_per_Product(integer id, string internet_1_GBs, string internet_250MBs, string tv_with_90_channels, string tv_with_150_channels, integer telephony_with_free_calls, integer  mobileprepaid, integer mobilepostpaid, integer product){
    {
   
 
         this.id = id;
-        this.Internet_1_GBs1 = Internet_1_GBs;
-        this.Internet_250_MBs= Internet_250_MBs;
-        this.Tv_with_90_channels= Tv_with_90_channels;
-        this.Tv_with_150_channels= Tv_with_150_channels;
-        this.Tv_with_150_channels= Tv_with_150_channels;
-        this.Tv_with_150_channels= Tv_with_150_channels;
-        this.Telephony_with_free_calls=Telephony_with_free_calls ;
-        this.Mobileprepaid=Mobileprepaid;
-        this.Mobilepostpaid=Mobilepostpaid;}
+        this.internet_1_GBs1 = internet_1_GBs;
+        this.internet_250_MBs= internet_250_MBs;
+        this.tv_with_90_channels= tv_with_90_channels;
+        this.tv_with_150_channels= tv_with_150_channels;
+        this.tv_with_150_channels= tv_with_150_channels;
+        this.tv_with_150_channels= tv_with_150_channels;
+        this.telephony_with_free_calls=telephony_with_free_calls ;
+        this.mobileprepaid=mobileprepaid;
+        this.mobilepostpaid=mobilepostpaid;}
         
 }
 
@@ -113,11 +112,11 @@ public class  Package_per_Product implements Serializable {
     }
 
     public String  getTv_with_90_channels() {
-        return Tv_with_90_channels;
+        return tv_with_90_channels;
     }
 
     public void setTv_with_90_channels(String Tv_with_90_channels) {
-        this.Tv_with_90_channels = Tv_with_90_channels;
+        this.tv_with_90_channels = tv_with_90_channels;
     }
 
     public String  getTv_with_150_channels() {
@@ -129,11 +128,11 @@ public class  Package_per_Product implements Serializable {
         this.Tv_with_150_channels = Tv_with_150_channels;
     }   
     public Integer  getTelephony_with_free_calls() {
-        return Telephony_with_free_calls;
+        return telephony_with_free_calls;
    
     }
     public void setTelephony_with_free_calls( Integer Telephony_with_free_calls) {
-        this.Telephony_with_free_calls = Telephony_with_free_calls;
+        this.telephony_with_free_calls = telephony_with_free_calls;
     }
     public String getProducts() {
         return products;
