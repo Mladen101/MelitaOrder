@@ -54,13 +54,15 @@ package com.model;
 	    @Basic(optional = false)
 	    @Column(name = "id")
 	    private Integer id;
-	    @Size(max = 256)
+	    @Size(max = 45)
 	    @Column(name = "internet")
-	    private Short internet;	  
+	    private String internet;
+	    @Size(max = 45)
 	    @Column(name = "tv")
-	    private Short tv;
+	    private String tv;
+	    @Size(max = 45)
 	    @Column(name = "telephony")
-	    private Short telephony;
+	    private String telephony;
 	    @Column(name = "mobile")
 	    private Short mobile;
 	    @Column(name = "package_per_Product")
