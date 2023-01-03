@@ -43,6 +43,10 @@ public class SiteController {
     
    // @Autowired
    // BuyDao buyDao;
+	
+   /* I made four classes. Order class for relations between classes Customer and Product,  with relations manyTomany
+   and relations between  clasess Product and Package_per_product with relations oneTomany 
+   */
 
 	private String customerdata;
     
