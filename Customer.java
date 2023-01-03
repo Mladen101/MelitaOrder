@@ -37,12 +37,14 @@ package com.model;
 	    , @NamedQuery(name = "Customer.findByfindBySurname", query = "SELECT c FROM Surname c WHERE c.surname = :surname")
 	    , @NamedQuery(name = "Customer.findByInstalation_address", query = "SELECT c FROM Instalation_address c WHERE c.instalation_address = :instalation_address")
             , @NamedQuery(name = "Customer.findByInstalation_date", query = "SELECT c FROM Instalation_date c WHERE c.instalation_date = :instalation_date")})
-	public class Customer implements Serializable {
+	    , @NamedQuery(name = "Customer.findByPackage_per_Product", query = "SELECT c FROM Package_per_Product c WHERE c.package_per_Product = :package_per_Product")})
+
+public class Customer implements Serializable {
 	
 	    private static final long serialVersionUID = 1L;
 
         
-        @ManyToMany(targetEntity=Buy.class)  
+        @ManyToMany(targetEntity=Orders.class)  
    
 		    @JoinTable(
 		        name = "Orders", 
@@ -76,7 +78,8 @@ package com.model;
 	    @Column(name = "instalation_date")
 	    @Temporal(TemporalType.TIMESTAMP)
 	    private Date installation_date;
-	    
+	    @Column(name = "package_per_Product")
+	    private Integer package_per_Product;
  
         
 	 
@@ -88,11 +91,14 @@ package com.model;
 	        this.id = id;
 	    }
 
-	    public Customer(Integer id, String name, String surname, String instalation_address) {
+	    public Customer(Integer id, String name, String surname, String instalation_address, Integer package_per_Product) {
 	        this.id = id;
 	        this.name = name;
 	        this.name = surname;
 	        this.instalation_address= instalation_address;
+		this.package_per_Product= package_per_Product;
+		    
+		    
 	    }
 
 	    public Integer getId() {
@@ -126,7 +132,14 @@ package com.model;
 	    public void setInstalation_address(String instalation_address) {
 	        this.instalation_address = instalation_address;
 	    }
-	    
+	  
+	    public Integer getPackage_per_Product() {
+	        return package_per_Product;
+	    }
+	   
+	    public void setPackage_per_Product(Integer package_per_Product) {
+	        this.package_per_Product = package_per_Product;
+	    }
 
 	    @Override
 	    public int hashCode() {
