@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
     , @NamedQuery(name = "Orders.findByCustomerdata", query = "SELECT o FROM Orders o WHERE o.customerdata = :customerdata")
     , @NamedQuery(name = "Orders.findByOrdertime", query = "SELECT o FROM Orders o WHERE o.ordertime = :ordertime")
-    , @NamedQuery(name = "Orders.findByProducts", query = "SELECT o FROM Orders o WHERE o.products = :products")
-    , @NamedQuery(name = "Orders.findByCustomers", query = "SELECT o FROM Orders o WHERE o.customers = :customers")})
+    , @NamedQuery(name = "Orders.findByProduct", query = "SELECT o FROM Orders o WHERE o.product = :product")
+    , @NamedQuery(name = "Orders.findByCustomer", query = "SELECT o FROM Orders o WHERE o.customer = :customer")})
  
 
 public class Orders implements Serializable {
@@ -64,9 +64,12 @@ public class Orders implements Serializable {
     private Date ordertime;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "products")
-    private String products;
+    @Size(min = 1, max = 45)
+    @Column(name = "product")
+    private String product; 
+    @Size(min = 1, max = 45)
+    @Column(name = "customer")
+    private String customer;
 
     public Orders() {
     }
@@ -75,10 +78,11 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, String customerdata, String products) {
+    public Orders(Integer id, String customerdata, String product, String customer) {
         this.id = id;
         this.customerdata = customerdata;
-        this.products = products;
+        this.product = product;
+	this.customer = customer;
     }
 
     public Integer getId() {
@@ -105,12 +109,19 @@ public class Orders implements Serializable {
         this.ordertime = ordertime;
     }
 
-    public String getProducts() {
+    public String getProduct() {
         return products;
     }
 
-    public void setProducts(String products) {
-        this.products = products;
+    public void setProduct(String product) {
+        this.product= product;
+    }
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String  customer) {
+        this.customer= customer;
     }
 
     @Override
@@ -138,10 +149,7 @@ public class Orders implements Serializable {
         return "com.model.Orders[ id=" + id + " ]";
     }
 
-	public void setPackage_per_Products(String substr) {
-		// TODO Auto-generated method stub
-		
-	}
+
     
 }
 
