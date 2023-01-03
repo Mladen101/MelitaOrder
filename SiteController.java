@@ -183,7 +183,33 @@ public class SiteController {
         model.addAttribute("package_per_Product", package_per_Product); 
         return "index";
     }
+    @RequestMapping("/")
+    public String index1(ModelMap model){ 
+        List<Customer> customer  = customerDao.find(); 
+        model.addAttribute("customer", customer ); 
+        return byCustomer (1, model);
+    }
+
+
+
+    @RequestMapping("/{id}")
+    public String byCustomer(@PathVariable int id, ModelMap model){ 
+        List<Customer> customer  = customerDao.find(); 
+        List<Product> product= productDao.findByPackage_per_Product(id);
+        model.addAttribute("product", product); 
+        model.addAttribute("customer", customer); 
+        return "index";
+	
+	}
+    
 }
+	
+	
+	
+	
+	
+}
+
 
 
 
