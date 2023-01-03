@@ -64,10 +64,8 @@ public class Orders implements Serializable {
     private Date ordertime;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "product")
     private String product; 
-    @Size(min = 1, max = 45)
     @Column(name = "customer")
     private String customer;
 
@@ -78,7 +76,7 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, String customerdata, String product, String customer) {
+    public Orders(Integer id, String customerdata, Integer product, Integer customer) {
         this.id = id;
         this.customerdata = customerdata;
         this.product = product;
@@ -113,14 +111,14 @@ public class Orders implements Serializable {
         return products;
     }
 
-    public void setProduct(String product) {
+    public void setProduct(Integer product) {
         this.product= product;
     }
-    public String getCustomer() {
+    public integer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String  customer) {
+    public void setCustomer(Integer  customer) {
         this.customer= customer;
     }
 
