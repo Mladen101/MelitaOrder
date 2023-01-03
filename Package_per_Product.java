@@ -47,15 +47,18 @@ public class  Package_per_Product implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1024)
+    @Size(min = 1, max = 256)
     @Column(name = "Internet_1_GBs")
-    private String Internet_1_GBs1;
+    private String Internet_1_GBs;
+    @Size(min = 1, max = 45)
     @Column(name = "Internet_250MBs")
-    private String Internet_250MBs;
+    private String Internet_250MBs;                            
+    @Size(min = 1, max = 45)
     @Column(name = "Tv_with_90_channels")
-    private Integer Tv_with_90_channels;
+    private String Tv_with_90_channels;
+    @Size(min = 1, max = 45)
     @Column(name = "Tv_with_150_channels")
-    private Integer Tv_with_150_channels;
+    private String Tv_with_150_channels;
     @Column(name = "Telephony_with_free_calls")
     private Integer Telephony_with_free_calls;
     @Column(name = " Mobileprepaid")
@@ -76,7 +79,7 @@ public class  Package_per_Product implements Serializable {
     
     }
   
-   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, Integer Tv_with_90_channels, Integer Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid){
+   public Package_per_Product(Integer id, String Internet_1_GBs, String Internet_250MBs, String Tv_with_90_channels, String Tv_with_150_channels, Integer Telephony_with_free_calls, Integer  Mobileprepaid, Integer Mobilepostpaid){
    {
   
 
@@ -109,20 +112,20 @@ public class  Package_per_Product implements Serializable {
         this.internet = internet;
     }
 
-    public Integer  getTv_with_90_channels() {
+    public String  getTv_with_90_channels() {
         return Tv_with_90_channels;
     }
 
-    public void setTv_with_90_channels(Integer Tv_with_90_channels) {
+    public void setTv_with_90_channels(String Tv_with_90_channels) {
         this.Tv_with_90_channels = Tv_with_90_channels;
     }
 
-    public Integer  getTv_with_150_channels() {
+    public String  getTv_with_150_channels() {
         return Tv_with_150_channels;
    
     }
     
-    public void setTv_with_150_channels(Integer Tv_with_150_channels) {
+    public void setTv_with_150_channels(String Tv_with_150_channels) {
         this.Tv_with_150_channels = Tv_with_150_channels;
     }   
     public Integer  getTelephony_with_free_calls() {
