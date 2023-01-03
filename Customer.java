@@ -2,25 +2,24 @@ package com.model;
 
 
 	import java.io.Serializable;
-    import java.sql.Date;
-import java.util.Set;
-
-import javax.persistence.Basic;
-    import javax.persistence.CascadeType;
-    import javax.persistence.Column;
+        import java.sql.Date;
+        import java.util.Set;
+        import javax.persistence.Basic;
+        import javax.persistence.CascadeType;
+        import javax.persistence.Column;
 	import javax.persistence.Entity;
 	import javax.persistence.Id;
 	import javax.persistence.GeneratedValue;
-    import javax.persistence.GenerationType;
-    import javax.persistence.JoinTable;
-    import javax.persistence.JoinColumn;
-    import javax.persistence.ManyToMany;
-    import javax.persistence.NamedQueries;
+        import javax.persistence.GenerationType;
+        import javax.persistence.JoinTable;
+        import javax.persistence.JoinColumn;
+        import javax.persistence.ManyToMany;
+        import javax.persistence.NamedQueries;
 	import javax.persistence.NamedQuery;
 	import javax.persistence.Table;
-    import javax.persistence.Temporal;
-    import javax.persistence.TemporalType;
-    import javax.validation.constraints.NotNull;
+        import javax.persistence.Temporal;
+        import javax.persistence.TemporalType;
+        import javax.validation.constraints.NotNull;
 	import javax.validation.constraints.Size;
 	import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,7 +36,7 @@ import javax.persistence.Basic;
 	    , @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Name c WHERE c.name = :name")
 	    , @NamedQuery(name = "Customer.findByfindBySurname", query = "SELECT c FROM Surname c WHERE c.surname = :surname")
 	    , @NamedQuery(name = "Customer.findByInstalation_address", query = "SELECT c FROM Instalation_address c WHERE c.instalation_address = :instalation_address")
-        , @NamedQuery(name = "Customer.findByInstalation_date", query = "SELECT c FROM Instalation_date c WHERE c.instalation_date = :instalation_date")})
+            , @NamedQuery(name = "Customer.findByInstalation_date", query = "SELECT c FROM Instalation_date c WHERE c.instalation_date = :instalation_date")})
 	public class Customer implements Serializable {
 	
 	    private static final long serialVersionUID = 1L;
@@ -46,7 +45,7 @@ import javax.persistence.Basic;
         @ManyToMany(targetEntity=Buy.class)  
    
 		    @JoinTable(
-		        name = "Buy", 
+		        name = "Orders", 
 		        joinColumns = { @JoinColumn(name = "customer_id") }, 
 		        inverseJoinColumns = { @JoinColumn(name = "product_id") }
 		    )  
@@ -55,7 +54,7 @@ import javax.persistence.Basic;
 	    @Basic(optional = false)
 	    @NotNull
 	    @Column(name = "id")
-		@GeneratedValue(strategy=GenerationType.AUTO)
+	    @GeneratedValue(strategy=GenerationType.AUTO)
 	    private Integer id;
 	    @Basic(optional = false)
 	    @NotNull
@@ -73,8 +72,7 @@ import javax.persistence.Basic;
 	    @Column(name= "instalation_address")
 	    private String instalation_address;
 	    @Basic(optional = false)
-	    @NotNull
-	    @Size(min = 1, max = 45)
+	    @NotNull	    
 	    @Column(name = "instalation_date")
 	    @Temporal(TemporalType.TIMESTAMP)
 	    private Date installation_date;
@@ -155,20 +153,9 @@ import javax.persistence.Basic;
 	        return "com.model.Customer[ id=" + id + " ]";
 	    }
 
-		public Object getProducts() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+		
 
-		public Object getProduct() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public void setProduct(Set<Product> product) {
-			// TODO Auto-generated method stub
-			
-		}
+	
 	    
 	}
 
