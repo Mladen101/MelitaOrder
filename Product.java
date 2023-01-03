@@ -2,16 +2,16 @@ package com.model;
 
 	import java.io.Serializable;
 	import java.math.BigDecimal;
-    import java.util.HashSet;
-    import javax.persistence.Basic;
+        import java.util.HashSet;
+        import javax.persistence.Basic;
 	import javax.persistence.Column;
 	import javax.persistence.Entity;
 	import javax.persistence.GeneratedValue;
 	import javax.persistence.GenerationType;
 	import javax.persistence.Id;
-    import javax.persistence.JoinColumn;
-    import javax.persistence.JoinTable;
-    import javax.persistence.ManyToMany;
+        import javax.persistence.JoinColumn;
+        import javax.persistence.JoinTable;
+        import javax.persistence.ManyToMany;
 	import javax.persistence.OneToMany;
 	import javax.persistence.NamedQueries;
 	import javax.persistence.NamedQuery;
@@ -35,7 +35,7 @@ package com.model;
 	    , @NamedQuery(name = "Product.findByTv", query = "SELECT p FROM Product p WHERE p.tv = :tv")
 	    , @NamedQuery(name = "Product.findByTelephony", query = "SELECT p FROM Telephony p WHERE p.telephony = :telephony")
 	    , @NamedQuery(name = "Product.findByMobile", query = "SELECT p FROM Mobile p WHERE p.mobile= :mobile")
-	    , @NamedQuery(name = "Product.findByPackage", query = "SELECT p FROM Product p WHERE p.package = :package")})
+	    , @NamedQuery(name = "Product.findByPackage_per_Prooduct", query = "SELECT p FROM Package_per_Prooduct p WHERE p.package_per_Prooduct = :package_per_Prooduct")})
 	
    public class Product implements Serializable {
 		
@@ -47,7 +47,7 @@ package com.model;
 		        joinColumns = { @JoinColumn(name = "customer_id") }, 
 		        inverseJoinColumns = { @JoinColumn(name = "product_id") }
 		    )  
-	    @OneToMany(mappedBy = "package")       
+	    @OneToMany(mappedBy = "package_per_Prooduct")       
 	    private static final long serialVersionUID = 1L;
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +64,8 @@ package com.model;
 	    private Short telephony;
 	    @Column(name = "mobile")
 	    private Short mobile;
+	    @Column(name = "package_per_Product")
+	    private String package_per_Product;
 	 
 	     
 	     @Transient
@@ -77,6 +79,15 @@ package com.model;
 
 	    public Product(Integer id) {
 	        this.id = id;
+	    }
+	   
+	    public Product(Integer id, Short internet, Short tv, Short telephony, Short Mobile, String Package_per_Product ) {
+	        this.id = id;
+	        this.internet = internet;
+	        this.tv = tv;
+	        this.telephony = telephony;
+	        this.mobile = mobile;
+	        this.package_per_Product = package_per_Product;
 	    }
 
 	    public Integer getId() {
@@ -107,6 +118,20 @@ package com.model;
 	    }
 	    public void setTelephony(Short telephony) {
 	        this.telephony = telephony;
+	    }
+	   
+	       public Short getMobile() {
+	        return mobile;
+	    }
+	    public void setMobile(Short mobile) {
+	        this.mobile = mobile;
+	    }
+	    public String getPackage_per_Product() {
+	        return package_per_Product;
+	    }
+
+	    public void setPackage_per_Product(String package_per_Product) {
+	        this.package_per_Product = package_per_Product;
 	    }
 
 	    @Override
