@@ -13,6 +13,7 @@ package com.model;
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public class ProductDao {
 	    @Autowired
+		static
 	    SessionFactory sessionFactory;
 	    
 	    public  Product geById(int id){
