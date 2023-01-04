@@ -1,5 +1,6 @@
-package postman;
 
+
+package postman;
 
 
 import java.io.FileInputStream;
@@ -46,7 +47,7 @@ public class PostmanUtils {
   private final String postmanEnvironmentFilePath;
   
   private static ObjectMapper objectMapper;
-  private OkHttpClient httpClient;
+  private OkHttpRequest httpClient;
   private Map<String, String> environmentMap;
   
   @Getter private List<OkHttpRequest> requestList;
@@ -117,7 +118,7 @@ public class PostmanUtils {
     Request.Builder reqBuilder = new Request.Builder();
     
     // URL
-    reqBuilder = ((Builder) reqBuilder).url(environmentStringIncluder(((CollectionItem) postmanRequest.getUrl()).getRaw()));
+   Builder reqBuilder = ((Builder) reqBuilder).url(environmentStringIncluder(((CollectionItem) postmanRequest.getUrl()).getRaw()));
 
     // Headers & mediaType
     List<ItemHeader> headerList = postmanRequest.getHeader();
@@ -130,7 +131,7 @@ public class PostmanUtils {
         if(key.equalsIgnoreCase("Content-Type")) {
           mediaType = MediaType.parse(value);
         }
-        reqBuilder = reqBuilder.addHeader(key, value);
+        reqBuilder = ((Builder) reqBuilder).addHeader(key, value);
       }
     }
     
@@ -143,12 +144,12 @@ public class PostmanUtils {
     if(body != null && body.getMode().equals("raw") && StringUtils.isNotBlank(body.getRaw())) {
       String rawBodyStr = environmentStringIncluder(body.getRaw());
       RequestBody reqBody = RequestBody.create(mediaType, rawBodyStr);
-      reqBuilder = reqBuilder.method(postmanRequest.getMethod(), reqBody);
+      reqBuilder = ((Builder) reqBuilder).method(postmanRequest.getMethod(), reqBody);
     } else {
-      reqBuilder = reqBuilder.method(postmanRequest.getMethod(), null);
+      reqBuilder = ((Builder) reqBuilder).method(postmanRequest.getMethod(), null);
     }
     
-    retList.add((OkHttpRequest) ((OkHttpRequest) OkHttpRequest.builder()).request(reqBuilder.build()).build());
+    retList.add((OkHttpRequest) ((OkHttpRequest) OkHttpRequest.builder()).request(((Builder) reqBuilder).build()).build());
   }
   
   private String environmentStringIncluder(CharSequence raw) {
