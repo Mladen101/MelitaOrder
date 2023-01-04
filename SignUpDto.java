@@ -41,7 +41,7 @@ public class SignUpDto {
 public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
 
     UserRepository userRepositoty;
-	UserRepository userRepository;
+	UserRepository userRepository = null;
 	// add check for username exists in a DB
     if(userRepository.existsByUsername(signUpDto.getUsername())){
         return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
@@ -59,14 +59,19 @@ public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
     user.setEmail(signUpDto.getEmail());
     user.setPassword(( ( SignUpDto) passwordEncoder).encode(signUpDto.getPassword()));
 
-    SignUpDto roleRepository;
-	Role roles = ((Object) ((SignUpDto) roleRepository).findByName("ROLE_ADMIN")).get();
+    SignUpDto roleRepository = null;
+	Role roles = ((SignUpDto) ((SignUpDto) roleRepository).findByName("ROLE_ADMIN")).get();
     user.setRoles(Collections.singleton(roles));
 
     userRepository.save(user);
 
     return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
+}
+
+private Role get() {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 private Object findByName(String string) {
